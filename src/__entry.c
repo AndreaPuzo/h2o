@@ -1,6 +1,7 @@
 #include "h2o.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main (int argc, char ** argv)
 {
@@ -21,7 +22,7 @@ int main (int argc, char ** argv)
   opts.output = NULL ;
 
   for (int i = 1 ; i < argc ; ++i) {
-    if (0 == str_comp(argv[i], "-o")) {
+    if (0 == strcmp(argv[i], "-o")) {
       if (i + 1 == argc) {
         fprintf(stderr, "fatal: missing argument for option `%s`\n", argv[i]) ;
         exit(EXIT_FAILURE) ;
