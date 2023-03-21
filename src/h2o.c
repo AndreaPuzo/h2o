@@ -70,16 +70,25 @@ int h2o (const char * input, const char * output)
   long cpos ;
 
   while (0 != *cp) {
+    while (0 != *cp && 0 != isspace(*cp)) {
+      ++cp ;
+    }
+    
+    if (0 == *cp)
+      break ;
+    
     if (';' == *cp) {
       ++cp ;
 
-      while (0 != *cp && 0 == (isspace(*cp) && !isblank(*cp)))
+      while (0 != *cp && 0 == (isspace(*cp) && !isblank(*cp))) {
         ++cp ;
+      }
     } else if ('\'' == *cp || '"' == *cp || '`' == *cp) {
       char quote = *cp++ ;
 
-      while (0 != *cp && quote != *cp)
+      while (0 != *cp && quote != *cp) {
         fputc(*cp++, out) ;
+      }
       
       if (quote != *cp) {
         calc_pos(data, size, cp, &line, &cpos) ;
@@ -93,8 +102,9 @@ int h2o (const char * input, const char * output)
     } else if ('.' == cp[0] && 'd' == cp[1] && 'u' == cp[2] && 'p' == cp[3]) {
       cp += 4 ;
 
-      while (0 != isspace(*cp))
+      while (0 != isspace(*cp)) {
         ++cp ;
+      }
       
       long count = 0 ;
 
@@ -104,18 +114,19 @@ int h2o (const char * input, const char * output)
         ++cp ;
       }
 
-      while (0 != isspace(*cp))
+      while (0 != isspace(*cp)) {
         ++cp ;
+      }
 
       int v = 0 ;
       
-      if ('0' <= *cp && *cp <= '9')
+      if ('0' <= *cp && *cp <= '9') {
         v += *cp - '0' ;
-      else if ('A' <= *cp && *cp <= 'F')
+      } else if ('A' <= *cp && *cp <= 'F') {
         v += *cp - 'A' + 10 ;
-      else if ('a' <= *cp && *cp <= 'f')
+      } else if ('a' <= *cp && *cp <= 'f') {
         v += *cp - 'a' + 10 ;
-      else {
+      } else {
         calc_pos(data, size, cp, &line, &cpos) ;
         fprintf(stderr, "In %s at %llu:%llu\n", input, line, cpos) ;
         fprintf(stderr, "error: invalid hex digit `%d` (`%c`)\n", *cp, isprint(*cp) ? *cp : '.') ;
@@ -126,13 +137,13 @@ int h2o (const char * input, const char * output)
       
       v *= 16 ;
       
-      if ('0' <= *cp && *cp <= '9')
+      if ('0' <= *cp && *cp <= '9') {
         v += *cp - '0' ;
-      else if ('A' <= *cp && *cp <= 'F')
+      } else if ('A' <= *cp && *cp <= 'F') {
         v += *cp - 'A' + 10 ;
-      else if ('a' <= *cp && *cp <= 'f')
+      } else if ('a' <= *cp && *cp <= 'f') {
         v += *cp - 'a' + 10 ;
-      else {
+      } else {
         calc_pos(data, size, cp, &line, &cpos) ;
         fprintf(stderr, "In %s at %llu:%llu\n", input, line, cpos) ;
         fprintf(stderr, "error: invalid hex digit `%d` (`%c`)\n", *cp, isprint(*cp) ? *cp : '.') ;
@@ -150,13 +161,13 @@ int h2o (const char * input, const char * output)
     } else if (isxdigit(*cp)) {
       int v = 0 ;
       
-      if ('0' <= *cp && *cp <= '9')
+      if ('0' <= *cp && *cp <= '9') {
         v += *cp - '0' ;
-      else if ('A' <= *cp && *cp <= 'F')
+      } else if ('A' <= *cp && *cp <= 'F') {
         v += *cp - 'A' + 10 ;
-      else if ('a' <= *cp && *cp <= 'f')
+      } else if ('a' <= *cp && *cp <= 'f') {
         v += *cp - 'a' + 10 ;
-      else {
+      } else {
         calc_pos(data, size, cp, &line, &cpos) ;
         fprintf(stderr, "In %s at %llu:%llu\n", input, line, cpos) ;
         fprintf(stderr, "error: invalid hex digit `%d` (`%c`)\n", *cp, isprint(*cp) ? *cp : '.') ;
@@ -167,13 +178,13 @@ int h2o (const char * input, const char * output)
       
       v *= 16 ;
       
-      if ('0' <= *cp && *cp <= '9')
+      if ('0' <= *cp && *cp <= '9') {
         v += *cp - '0' ;
-      else if ('A' <= *cp && *cp <= 'F')
+      } else if ('A' <= *cp && *cp <= 'F') {
         v += *cp - 'A' + 10 ;
-      else if ('a' <= *cp && *cp <= 'f')
+      } else if ('a' <= *cp && *cp <= 'f') {
         v += *cp - 'a' + 10 ;
-      else {
+      } else {
         calc_pos(data, size, cp, &line, &cpos) ;
         fprintf(stderr, "In %s at %llu:%llu\n", input, line, cpos) ;
         fprintf(stderr, "error: invalid hex digit `%d` (`%c`)\n", *cp, isprint(*cp) ? *cp : '.') ;

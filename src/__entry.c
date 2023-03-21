@@ -58,7 +58,7 @@ int main (int argc, char ** argv)
     exit(EXIT_FAILURE) ;
   }
 
-  char default_output [256 + 1] ;
+  char default_output [256 + 3] ;
   int i ;
   int c = 'a' ;
   
@@ -71,15 +71,17 @@ int main (int argc, char ** argv)
       default_output[i] = c++ ;
     }
     
+    default_output[i + 1] = '.' ;
+    default_output[i + 2] = 'o' ;
+    default_output[i + 3] = 0 ;
+    
     FILE * fp = fopen(default_output, "r") ;
 
     if (NULL == fp)
       break ;
+      
+    fclose(fp) ;
   }
-  
-  default_output[i++] = '.' ;
-  default_output[i++] = 'o' ;
-  default_output[i] = 0 ;
 
   if (NULL == opts.output) {
     opts.output = default_output ;
