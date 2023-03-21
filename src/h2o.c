@@ -184,11 +184,9 @@ int h2o (const char * input, const char * output)
       
       fputc(v, out) ;
     } else {
-#ifdef _EMIT_WARNINGS
       calc_pos(data, size, cp, &line, &cpos) ;
       fprintf(stderr, "In %s at %llu:%llu\n", input, line, cpos) ;
       fprintf(stderr, "warning: unknow character `%d` (`%c`)\n", *cp, isprint(*cp) ? *cp : '.') ;
-#endif
       ++cp ;
     }
   }
